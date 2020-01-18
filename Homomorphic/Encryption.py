@@ -14,3 +14,11 @@ class EncryptorBits():
     def decryptArray(self, edata):
         decrypted_number_list= [self.private_key.decrypt(x) for x in edata]
         return decrypted_number_list
+
+    def add(self, argv*):
+        """Adds encrypted arrays of same length together"""
+        sumarr= []
+        for arg in argv:
+            for _ in range(len(arg)):
+                sumarr[_]+= argv[_-1]
+        return sumarr
