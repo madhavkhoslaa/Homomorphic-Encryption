@@ -8,7 +8,7 @@ class SerDe():
     def __init__(self):
         pass
 
-    def Serialise(self, object):
+    def Serialise(self, object, key):
         """Returns the binary data into a base 64 encoded values"""
         payload = {}
         picklefile = open('datadump', 'wb')
@@ -17,6 +17,7 @@ class SerDe():
         f=open("datadump", "rb")
         payload['content'] = base64.b64encode(f.read())
         os.system("rm -rf datadump")
+        payload["public key"]= key
         return payload
 
     def Deserialise(self, payload):
