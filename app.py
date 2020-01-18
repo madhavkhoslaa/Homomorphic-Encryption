@@ -1,21 +1,36 @@
-from flask import Flask, request
-from flask_restful import Resource, Api
-import pandas
+from flask import Flask 
+from Homomorphic.Encryption import EncryptorBits
+from utils.SerDe import SerDe
+from flask import jsonify
+from flask import request
+import flask
 
 
-app = Flask(__name__)
-api = Api(app)
-todos = {}
-dataset= pandas.read_csv("Dataset/diabetes.csv")
-class GetData(Resource):
-    def get(self, start_stop):
-        start, stop= start_stop.split("-")
-        print(dataset.iloc[start: stop])
+A= EncryptorBits()
+app = Flask(__name__) 
+PRIVATE, PUBLIC= A.private_key, A.public_key
+x= SerDe()
+@app.route('/Encrypt') 
+def Encrypt(): 
+    data = flask.request.json["Vector"]
+    return str(x.Serialise(A.encryptArray(data)))
 
-    def put(self):
-        pass
-
-api.add_resource(GetData, '/<string:start_stop>')
-
+@app.route('/Deserialise', methods= ['GET'])
+def Deserialise():
+    data = flask.request.json
+    y= A.decryptArray(x.Deserialise(data))
+    return str(y)
+    
+@app.route('/Decrypt')
+def Decrypt():
+    data = flask.request.json
+    ss= x.Deserialise(data)
+    """
+    A.private_key= data["private"]
+    A.public_key= data["public"]"""
+    return str(ss)
+"""
+@app.route("/add")
+"""
 if __name__ == '__main__':
-    app.run(debug=True, port=6969)
+    app.run(debug=True, port= 3234) 
