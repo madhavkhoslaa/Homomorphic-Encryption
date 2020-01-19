@@ -4,8 +4,9 @@ from utils.SerDe import SerDe
 from flask import jsonify
 from flask import request
 import flask
+import pandas
 
-
+DATASET= "Dataset/diabetes.csv"
 A= EncryptorBits()
 app = Flask(__name__) 
 PRIVATE, PUBLIC= A.private_key, A.public_key
@@ -29,8 +30,16 @@ def Decrypt():
     A.private_key= data["private"]
     A.public_key= data["public"]"""
     return str(ss)
-"""
-@app.route("/add")
-"""
+@app.route('/getdata')
+def getdataset():
+    ds= pandas.read_csv(DATASET)
+    data_dict= {}
+    for _ in ds[0:0]:
+        print(_)
+        data_dict[_] = x.Serialise(A.encryptArray(ds[_]))
+    print(data_dict)
+    return str(data_dict)
+
+
 if __name__ == '__main__':
     app.run(debug=True, port= 3234) 
