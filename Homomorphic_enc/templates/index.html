@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html >
+
+  <head>
+    <meta charset="UTF-8">
+    <title>ML API</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  
+  </head>
+
+  <body>
+    <div class="box">
+	    <h1>Diabetes</h1>
+
+      <!-- Main Input For Receiving Query to our ML -->
+      <form action="{{ url_for('predict')}}" method="post">
+        <input type="text" name="Pregnancies" placeholder="Pregnancies" required="required" />
+        <input type="text" name="Glucose" placeholder="Glucose" required="required" />
+        <input type="text" name="SkinThickness" placeholder="SkinThickness" required="required" />
+        <input type="text" name="BloodPressure" placeholder="BloodPressure" required="required" />
+        <input type="text" name="Insulin" placeholder="Insulin" required="required" />
+        <input type="text" name="BMI" placeholder="BMI" required="required" />
+        <input type="text" name="DiabetesPedigreeFunction" placeholder="DiabetesPedigreeFunction" required="required" />
+        <input type="text" name="Age" placeholder="Age" required="required" />
+		    <button type="submit">Predict</button>
+      </form>
+    <br>
+    <div class='Result'>
+      {{ prediction_text }}
+  </div>
+    </div>
+  </body>
+</html>
