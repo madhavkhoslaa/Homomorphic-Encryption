@@ -36,10 +36,10 @@ def getdataset():
     data_dict= {}
     for _ in ds[0:0]:
         print(_)
-        data_dict[_] = x.Serialise(A.encryptArray(ds[_]))
-    print(data_dict)
+        #Doing 0:5 strip
+        data_dict[_] = x.Serialise(A.encryptArray(ds[_])[0:5])
     return str(data_dict)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port= 3234) 
+    app.run(debug=True, port= 6060) 
